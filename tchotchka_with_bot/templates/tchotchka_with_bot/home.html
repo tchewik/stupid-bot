@@ -1,0 +1,12 @@
+{% extends 'tchotchka_with_bot/base.html' %}
+{% block content %}
+        <ul id="staggered-test">
+            <li class="collection-header">
+                <h3>Здравствуйте, мои дорогие</h3>
+                <h4>Время поболтать</h4>
+            </li>
+        </ul>
+        <div class="apply">
+            <div class="card-panel center-align"><a href="{% url 'tchotchka_with_bot.views.conversation' %}">"Согласен(-на)"</a></div>
+        </div>
+{% endblock %}
