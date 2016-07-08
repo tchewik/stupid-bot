@@ -15,7 +15,9 @@ def conversation(request):
             replic = form.save(commit=False)
             replic.rep = request.POST.get('rep', '0')
             replic.save()
-            answer = tchebot.answer(replic)
+            print("<<<REPLIC: ", replic.rep)
+            replic.ans = tchebot.answer(replic)
+            print("<<<ANSWER: ", replic.ans)
         return render(request, 'tchotchka_with_bot/conversation.html', {'replics': replic, 'form': MsgForm})
     else:
         form = MsgForm()

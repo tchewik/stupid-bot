@@ -1,20 +1,29 @@
 {% extends 'tchotchka_with_bot/base.html' %}
+{% load static %}
 {% block content %}
 
     <div id="modal1" class="modal">
-        <div class="modal-content">
-          <ul>
+        <div class="container">
               {% if replics.rep %}
-                  <li class="collection-item">
-                        <p>YOU: {{ replics.rep }}</p>
-                        <p>BOT: {{ replics.ans }}</p>
-                  </li>
+                    <div class="row">
+                        <div class="col m2 s3">
+                            <div class="avatar" style='background-image: url("{%  static 'img/your_avatar.jpg' %}")'></div>
+                        </div>
+                        <div class="col m10 s9">{{ replics.rep }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col m2 s3">
+                            <div class="avatar" style='background-image: url("{%  static 'img/lena_avatar.jpg' %}")'></div>
+                        </div>
+                        <div class="col m10 s9">{{ replics.ans }}</div>
+                    </div>
               {% endif %}
-          </ul>
-            <form method="POST" class="post-form">{% csrf_token %}
-                {{form.as_p}}
-                <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Save</button>
-            </form>
+            <div class="row">
+                <form method="POST" class="post-form">{% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Save</button>
+                </form>
+            </div>
         </div>
         <div class="modal-footer">
             <a href="{% url 'tchotchka_with_bot.views.home' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Ну хорош.</a>
