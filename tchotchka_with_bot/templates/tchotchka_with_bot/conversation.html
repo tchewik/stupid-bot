@@ -4,11 +4,12 @@
     <div id="modal1" class="modal">
         <div class="modal-content">
           <ul>
-              {% for repl in replics %}
+              {% if replics.rep %}
                   <li class="collection-item">
-                      <h4 class="answer">{{ repl.rep }}</h4>
+                        <p>YOU: {{ replics.rep }}</p>
+                        <p>BOT: {{ replics.ans }}</p>
                   </li>
-              {% endfor %}
+              {% endif %}
           </ul>
             <form method="POST" class="post-form">{% csrf_token %}
                 {{form.as_p}}

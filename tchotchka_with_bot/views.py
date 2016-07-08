@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Bot
 from .forms import MsgForm
+from . import tchebot
 
 
 def home(request):
@@ -8,11 +9,16 @@ def home(request):
     return render(request, 'tchotchka_with_bot/home.html', {'replics': replics})
 
 def conversation(request):
-    form = MsgForm()
     if request.method == "POST":
-        
-        return render(request, 'tchotchka_with_bot/conversation.html', {'replics': None, 'form': form})
+        form = MsgForm(request.POST)
+        if form.is_valid():
+            replic = form.save(commit=False)
+            replic.rep = request.POST.get('rep', '0')
+            replic.save()
+            answer = tchebot.answer(replic)
+        return render(request, 'tchotchka_with_bot/conversation.html', {'replics': replic, 'form': MsgForm})
     else:
+        form = MsgForm()
         replics = Bot.objects.filter()
         print(">>>", replics)
         return render(request, 'tchotchka_with_bot/conversation.html', {'replics': replics, 'form': form})
