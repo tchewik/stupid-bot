@@ -4,11 +4,16 @@ import os.path, sys
 BASE = os.path.dirname(os.path.abspath(__file__))
 
 
+# use it only for file splitting, if you have one
+# add your .txt file in the folder and do
+# python3 tchebot.py 'Елена Чистова' 'conversation'
+# so my replics will be added into 'bot_replics.txt'
+# from your conversation
 def Guy(name, filename):
     try:
         with codecs.open(os.path.join(BASE, filename), 'r', encoding='UTF-8') as file:
             stuff = file.read()
-            with codecs.open(os.path.join(BASE, 'bot_replics.txt'), 'a') as out:
+            with codecs.open(os.path.join(BASE, 'bot_replics.dat'), 'a') as out:
                 for str in re.findall(name + ' \(.*\):\n(.*)\n\n', stuff):
                     out.write('\n'+str)
             return set(re.findall(name + ' \(.*\):\n(.*)\n\n', stuff))
@@ -54,13 +59,18 @@ def answer(message):
         return u'Извините, я у бабушки'
     except IOError as notbotreplics:
         print(">>>TROUBLES WITH OPEN bot_replics.txt, SIR. TRY AGAIN")
-        global CRITICAL_COUNTER
-        if CRITICAL_COUNTER <= 4:
-            CRITICAL_COUNTER += 1
-            botreplics = Guy(name, filename)
-            answer(message)
-        else:
-            sys.exit(0)
 
 if __name__ == "__main__":
-    answer('Hi')
+    if (sys.argv[-1] == '--help'):
+        print( "\
+            \n#\tuse it only for file splitting, if you have one\
+            \n#\tadd your .txt file in the folder and do smth like\
+            \n#\
+            \n#\tpython3 tchebot.py 'Елена Чистова' 'conversation'\
+            \n#\
+            \n#\tso my replics will be added into 'bot_replics.txt'\
+            \n#\tfrom your conversation\n")
+    else:
+        print("\nuse --help for information\n")
+    if len(sys.argv) == 3:
+        Guy(str(sys.argv[1]), str(sys.argv[2]))
