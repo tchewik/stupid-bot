@@ -1,0 +1,13 @@
+{% extends 'tchotchka_with_bot/base.html' %}
+{% block content %}
+    <div id="modal1" class="modal" style="padding: 2em">
+        <div class="jumbotron center-align"><h2 class="red-text text-accent-1 darken-3">Зайди в систему!</h2></div>
+        <div class="modal-footer">
+                <a href="/admin" class=" modal-action modal-close waves-effect waves-green btn-flat">Окау.</a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('#modal1').openModal();
+    </script>
+{% endblock %}
