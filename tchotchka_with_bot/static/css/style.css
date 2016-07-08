@@ -24,6 +24,10 @@
         background-size: auto 4.2em;
         border-radius: 50%;
     }
+    .conversation .text {
+        padding-top: 1em;
+    }
+
 }
 
 .icon-block {
@@ -52,9 +56,6 @@ a:active {
 
 .conversation {
     padding-top: 2em;
-}
-
-.conversation .text {
-    padding-top: 1em;
     color: rgba(15%, 15%, 15%, .6);
 }
+

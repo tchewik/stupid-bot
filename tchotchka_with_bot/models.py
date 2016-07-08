@@ -7,3 +7,6 @@ class Bot(models.Model):
 
     def __str__(self):
         return self.rep
+
+    def saveAns(self, answer):
+        ans = answer

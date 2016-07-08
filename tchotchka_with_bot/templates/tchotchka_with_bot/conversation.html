@@ -4,26 +4,35 @@
 
     <div id="modal1" class="modal">
         <div class="conversation container">
-              {% if replics.rep %}
+            {% for replic in replics %}
+              {% if replic.rep %}
                     <div class="row">
                         <div class="col m2 s3">
                             <div class="avatar" style='background-image: url("{%  static 'img/your_avatar.jpg' %}")'></div>
                         </div>
-                        <div class="col m10 s9 text">{{ replics.rep }}</div>
+                        <div class="col m10 s9 text">{{ replic.rep }}</div>
                     </div>
                     <div class="row">
                         <div class="col m2 s3">
                             <div class="avatar" style='background-image: url("{%  static 'img/lena_avatar.jpg' %}")'></div>
                         </div>
-                        <div class="col m10 s9 text">{{ replics.ans }}</div>
+                        <div class="col m10 s9 text">{{ replic.ans }}</div>
                     </div>
               {% endif %}
+            {% endfor %}
+
             <div class="row">
                 <form method="POST" class="post-form">{% csrf_token %}
                     {{form.as_p}}
-                    <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">Save</button>
                 </form>
             </div>
+
+            <script type="text/javascript">
+                //for scrolling bottom
+                window.onload = function () {
+                    $('#modal1').scrollTop($('#modal1').height());
+                }
+            </script>
         </div>
         <div class="modal-footer">
             <a href="{% url 'tchotchka_with_bot.views.home' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Ну хорош.</a>

@@ -23,9 +23,12 @@ def Guy(name, filename):
 
 QUESTIONS = {
     u'почему':u'потому что',
-    u'зачем':u'затем',
-    u'когда':u'тогда, '
+    u'зачем':u'затем, что',
+    u'когда':u'тогда, когда',
+    u'кого':u'тебя',
+    u'кому':u'ему'
 }
+
 
 def checkQuestion(keyword):
     try:
@@ -34,7 +37,6 @@ def checkQuestion(keyword):
         return keyword
 
 
-CRITICAL_COUNTER = 0
 def answer(message):
     used = []
     enough = False
@@ -48,7 +50,7 @@ def answer(message):
                         used.append(bullshit.lower())
                         return (u'{}'.format(bullshit))
         return u'Извините, я у бабушки'
-    except IOError as notbotreplics:
+    except IOError:
         print(">>> TROUBLES WITH OPEN bot_replics.txt, SIR. TRY TO START tchebot.py FROM COMMAND LINE")
         return 'Чего-то пошло не так. Попробуй вживую.'
 
