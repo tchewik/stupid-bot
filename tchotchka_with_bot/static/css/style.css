@@ -50,3 +50,11 @@ a:active {
     color: #5F1521;
 }
 
+.conversation {
+    padding-top: 2em;
+}
+
+.conversation .text {
+    padding-top: 1em;
+    color: rgba(15%, 15%, 15%, .6);
+}

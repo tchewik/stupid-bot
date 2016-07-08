@@ -36,14 +36,10 @@ def checkQuestion(keyword):
 
 CRITICAL_COUNTER = 0
 def answer(message):
-    name = 'Елена Чистова'
-    filename = 'yell.txt'
-    print('Имеете честь разговаривать с персонажем {}'.format(name))
     used = []
     enough = False
     try:
         with codecs.open(os.path.join(BASE, 'bot_replics.txt'), 'r') as bot:
-            print("TYPE OF message: ", type(message))
             yourWords = re.split(r'[., :;]', str(message))
             for word in yourWords:
                 keyword = checkQuestion(word.lower())
@@ -51,14 +47,10 @@ def answer(message):
                     if not enough and keyword in u'{}'.format(bullshit.lower()) and not bullshit.lower() in used:
                         used.append(bullshit.lower())
                         return (u'{}'.format(bullshit))
-                if not enough:
-                    print(u'{0} <<< '.format(name) + u'Да ну тебя')
-                    break
-                else:
-                    break
         return u'Извините, я у бабушки'
     except IOError as notbotreplics:
-        print(">>>TROUBLES WITH OPEN bot_replics.txt, SIR. TRY AGAIN")
+        print(">>> TROUBLES WITH OPEN bot_replics.txt, SIR. TRY TO START tchebot.py FROM COMMAND LINE")
+        return 'Чего-то пошло не так. Попробуй вживую.'
 
 if __name__ == "__main__":
     if (sys.argv[-1] == '--help'):
