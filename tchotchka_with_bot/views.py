@@ -10,6 +10,7 @@ def home(request):
         Bot.objects.filter(guy_id=request.user).delete()
     return render(request, 'tchotchka_with_bot/home.html')
 
+
 def conversation(request):
     if request.user.is_authenticated():
         if request.method == "POST":
@@ -18,10 +19,10 @@ def conversation(request):
                 replic = form.save(commit=False)
                 replic.guy = request.user
                 replic.rep = request.POST.get('rep', '0')
-                replic.ans = tchebot.answer(replic)
+                #used_replics = Bot.objects.filter(guy_id=request.user).get(ans)
+                #print('>>>USED>>REPLICS>> ',used_replics)
+                replic.ans = tchebot.answer(replic.rep)
                 replic.save()
-                print("<<<REPLIC: ", replic.rep)
-                print("<<<ANSWER: ", replic.ans)
 
         form = MsgForm()
         replics = Bot.objects.filter(guy_id=request.user)
