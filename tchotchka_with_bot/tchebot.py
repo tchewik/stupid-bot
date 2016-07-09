@@ -84,7 +84,7 @@ QUESTIONS = {
         r'.*ао',
     ],
     r'.*ы кт.*':[
-        r'.*не.*жопа.*',
+        r'.*не .*жопа.*',
     ],
     r'.*да.*':[
         r'^нет[\.,!?].*',
@@ -98,12 +98,17 @@ QUESTIONS = {
         r'^здравствуйте.*',
         r'^привет.*',
     ],
-    r'(.*как дел.*)|(.*как ты.*)|(.*как жизн.*)':[
+    r'(.*как дел.*)|(.*как ты.?)|(.*ты как.*)|(.*как жизн.*)':[
         r'^как у .*',
         r'^пизд.*',
         r'хорошо.*',
         r'.*норм.*',
         r'отлич.*',
+    ],
+    r'.*как.*':[
+        r'^как у .*',
+        r'^как в .*',
+        r'^как на .*',
     ],
     r'(как.*зовут.*)|(.*звать.*)':[
         r'лена.*',
@@ -117,7 +122,13 @@ QUESTIONS = {
         r'^в .*е',
     ],
     r'(.*куда*.)':[
-        r'в .*[вджкноуч]',
+        r'в .*[ву]',
+    ],
+    r'.*сколько.*':[
+        r'мно.*',
+    ],
+    r'.*кто.*':[
+        r'.*не.*тво.*дело.*',
     ],
     r'.*думаю.*':[
         r'.*думаешь\?',
@@ -125,6 +136,29 @@ QUESTIONS = {
     r'.*думаешь.*':[
         r'.*разниц.*',
         r'.*думаю.*',
+    ],
+    r'.*ла$':[
+        r'.*всё равно',
+        r'.*дела.*нет.*',
+        r'.*зачем.*мне.*это.*'
+    ],
+    r'.*какое.*':[
+        r'.*такое.*',
+    ],
+    r'(.*что.*)|(.*чего.*)':[
+        r'.*вот это вот\b.*',
+        r'не знаю.?',
+    ],
+    r'.*пойдём.*':[
+        r'.*хорошо',
+    ],
+    r'.*ебанулась.*':[
+        r'да, я.*'
+    ],
+    r'(.*пока$)|(.*спок.*но.*)|(.*я.*спать.*)|(.*до.*свидан.*)':[
+        r'.*спокойной.*',
+        r'.*всего доброго.*',
+        r'.*пока.?$',
     ]
 }
 
@@ -141,11 +175,13 @@ def answer(message, used=[]):
         with codecs.open(os.path.join(BASE, 'bot_replics.txt'), 'r') as tchewik:
             allbullshit = tchewik.readlines()
             yourWords = message
-
             keyword = checkQuestion(yourWords.lower())
+            print(allbullshit)
+            random.shuffle(allbullshit)
+            print(allbullshit)
             for bullshit in allbullshit:
                 if not bullshit in used and re.match(keyword, bullshit, re.IGNORECASE):
-                    return (u'{}'.format(bullshit))
+                    return bullshit
             return allbullshit[random.randint(0, len(allbullshit))]
     except IOError:
         print(">>> TROUBLES WITH OPEN bot_replics.txt, SIR. TRY TO START tchebot.py FROM COMMAND LINE")
