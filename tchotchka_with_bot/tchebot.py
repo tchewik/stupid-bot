@@ -65,7 +65,7 @@ QUESTIONS = {
     r'.*ть\b':[
         r'мило',
     ],
-    r'.*хочу .*ся':[
+    r'.*хочу .*ся\b':[
         r'палец',
     ],
     r'нравится':[
@@ -108,13 +108,23 @@ QUESTIONS = {
     r'(как.*зовут.*)|(.*звать.*)':[
         r'лена.*',
     ],
-    r'(ч.*делаешь.*)|(ч.*маешься)|(ч.*кодишь)':[
+    r'(ч.*делаешь.*)|(ч.*маешься.*)|(.*кодишь.*)':[
         r'.*я.*аю.*',
         r'.*я.*щу.*',
         r'.*сплю.*',
     ],
     r'(.*где.*)':[
-        r'^в .*',
+        r'^в .*е',
+    ],
+    r'(.*куда*.)':[
+        r'в .*[вджкноуч]',
+    ],
+    r'.*думаю.*':[
+        r'.*думаешь\?',
+    ],
+    r'.*думаешь.*':[
+        r'.*разниц.*',
+        r'.*думаю.*',
     ]
 }
 
@@ -126,7 +136,7 @@ def checkQuestion(keyword):
     return keyword
 
 
-def answer(message, ignore=[]):
+def answer(message, used=[]):
     try:
         with codecs.open(os.path.join(BASE, 'bot_replics.txt'), 'r') as tchewik:
             allbullshit = tchewik.readlines()
@@ -134,7 +144,7 @@ def answer(message, ignore=[]):
 
             keyword = checkQuestion(yourWords.lower())
             for bullshit in allbullshit:
-                if re.match(keyword, bullshit, re.IGNORECASE):
+                if not bullshit in used and re.match(keyword, bullshit, re.IGNORECASE):
                     return (u'{}'.format(bullshit))
             return allbullshit[random.randint(0, len(allbullshit))]
     except IOError:

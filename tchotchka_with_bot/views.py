@@ -19,9 +19,10 @@ def conversation(request):
                 replic = form.save(commit=False)
                 replic.guy = request.user
                 replic.rep = request.POST.get('rep', '0')
-                #used_replics = Bot.objects.filter(guy_id=request.user).get(ans)
-                #print('>>>USED>>REPLICS>> ',used_replics)
-                replic.ans = tchebot.answer(replic.rep)
+                ans_list = Bot.objects.filter(guy_id=request.user).values_list('ans')
+                used_replics = [used_replic[0] for used_replic in ans_list]
+                print('>>>USED>>REPLICS>> ', used_replics)
+                replic.ans = tchebot.answer(replic.rep, used_replics)
                 replic.save()
 
         form = MsgForm()
