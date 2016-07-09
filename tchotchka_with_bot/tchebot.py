@@ -176,9 +176,7 @@ def answer(message, used=[]):
             allbullshit = tchewik.readlines()
             yourWords = message
             keyword = checkQuestion(yourWords.lower())
-            print(allbullshit)
             random.shuffle(allbullshit)
-            print(allbullshit)
             for bullshit in allbullshit:
                 if not bullshit in used and re.match(keyword, bullshit, re.IGNORECASE):
                     return bullshit
