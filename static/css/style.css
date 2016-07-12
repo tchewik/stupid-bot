@@ -57,5 +57,14 @@ a:active {
 .conversation {
     padding-top: 2em;
     color: rgba(15%, 15%, 15%, .6);
+    background-image: url('img/mumb_bg.jpg');
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+
+    animation: animatedBackground 40s linear infinite;
 }
 
+@keyframes animatedBackground {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
+}
