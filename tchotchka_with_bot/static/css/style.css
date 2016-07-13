@@ -27,7 +27,6 @@
     .conversation .text {
         padding-top: 1em;
     }
-
 }
 
 .icon-block {
@@ -59,14 +58,7 @@ a:active {
     color: rgba(15%, 15%, 15%, .6);
 }
 
-.modal-footer {
-    background-image: url('img/mumb_bg.jpg');
-    background-position: 50%;
-    background-repeat: repeat-x;
-    background-size: 20%;
 
-    animation: animatedBackground 80s linear infinite;
-}
 
 @keyframes animatedBackground {
     from { background-position: 0 0; }
@@ -74,6 +66,17 @@ a:active {
 }
 
 
-.modal-footer a {
+
+@media screen and (min-width: 651px){
+    .modal-footer {
+    background-image: url('img/mumb_bg.jpg');
+    background-position: 50%;
+    background-repeat: repeat-x;
+    background-size: 20%;
+    animation: animatedBackground 80s linear infinite;
+    }
+
+    .modal-footer a {
     background-color: #fff;
+    }
 }
