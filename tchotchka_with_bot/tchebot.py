@@ -38,6 +38,7 @@ class Tchebot:
 
                 with open(os.path.join(BASE, self.file_data), 'wb+') as file:  # write in a binary file
                     pickle.dump(self.data, file)
+                print("\nfile {} was successfully grabbed!\n".format(sys.argv[3]))
 
         except IOError as annoyingshit:
             print(u'Can\'t open the {0} file'.format(annoyingshit.filename))
@@ -73,6 +74,10 @@ def help():
         print(help_file.read())
     sys.exit(0)
 
+def reply(sentence, escape_list):
+    tchebot = Tchebot()
+    return tchebot.reply(sentence, escape_list)
+
 if __name__ == "__main__":
     if len(sys.argv) > 1 and '--help' in sys.argv:
         help()
@@ -82,7 +87,6 @@ if __name__ == "__main__":
 
         if len(sys.argv) == 4 and str(sys.argv[1]) == 'grab':
             tchebot.grab(str(sys.argv[2]), str(sys.argv[3]))
-            print("\nfile {} was successfully grabbed!\n".format(sys.argv[3]))
 
         elif len(sys.argv) > 1 and 'talk' in sys.argv:
             while(True):
