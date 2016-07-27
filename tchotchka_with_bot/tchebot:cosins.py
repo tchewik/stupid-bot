@@ -28,7 +28,7 @@ class dataset:
                 console_counter = 0
                 for sentence in file.readlines():
                     sentence = re.split(r'[^a-zа-я]', sentence.lower())
-                    for trash in ['', 'а', 'и', 'не', 'y', 'ты']:
+                    for trash in ['', 'а', 'ты']:
                         while trash in sentence:
                             sentence.remove(trash)
                     self.data.append(sentence)
@@ -36,6 +36,7 @@ class dataset:
                     if console_counter % 500 == 0:
                         print(">>> successfully added string {0} in dataset! ".format(console_counter))
 
+                #print(self.data)
                 with open(os.path.join(BASE, self.file_data), 'wb+') as file:
                     pickle.dump(self.data, file)
 
@@ -48,11 +49,12 @@ class dataset:
             # make a dictionary and write in file
             print(">> file 'dict.json' is not found. Create new 'dict.json")
             console_counter = 0
-            for word in sentence:
-                self.dictionary[word] = sentence.index(word)
-                console_counter += 1
-                if console_counter % 500 == 0:
-                    print(">>> successfully added string {0} in dictionary! ".format(console_counter))
+            for sentence in self.data:
+                for word in sentence:
+                    self.dictionary[word] = sentence.index(word)
+                    console_counter += 1
+                    if console_counter % 500 == 0:
+                        print(">>> successfully added string {0} in dictionary! ".format(console_counter))
             json.dump(self.dictionary, open(os.path.join(BASE, self.file_dictionary), 'w'))
 
 
@@ -82,18 +84,18 @@ class dataset:
     def reply(self, input_sentence):
         input_sentence = re.split(r'[^a-zа-я]', input_sentence.lower())  # tokenize
         vector = self.make_vector(input_sentence)  # makes a vector like in the matrix
+        print("input vector", vector)
         cosins = self.count_cosses(vector)  # finds a cos difference between user's sentence and every sentence in the data, http://bit.ly/2a6F31g
-        print(cosins)
         similar_sentences = []
         for i in range(0, 5):
             similar_sentences.append(" ".join(self.data[cosins.index(min(cosins))]))
             cosins[cosins.index(min(cosins))] = 2
         print(similar_sentences)
         #return "\n".join(similar_sentences)
-        return similar_sentences[random.randint(1,5)]
+        return similar_sentences[1]
 
 
 if __name__ == "__main__":
     set_of_lenka = dataset('bot_replics:small.txt')
     while (True):
-        print(set_of_lenka.reply(input('>>> ')))
+        print(set_of_lenka.reply(input(u'>>> ')))

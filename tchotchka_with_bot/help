@@ -1,0 +1,14 @@
+HELP
+
+#   option: grab
+#   use it only for file splitting, if you have one
+#   add your .txt file in the folder and do smth
+#   for example
+#       $ python3 tchebot.py grab 'Елена Чистова' 'conversation'
+#   so my replics will be added into 'data' file
+#   from your conversation
+#
+#   option: talk
+#   use it to talk with bot in command line
+#   for example
+#       $ python3 tchebot.py talk
