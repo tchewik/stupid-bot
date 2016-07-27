@@ -22,11 +22,6 @@ class Tchebot:
 
 
     def grab(self, name, filename):
-        # use it only for file splitting, if you have one
-        # add your .txt file in the folder and do
-        # python3 tchebot.py 'Елена Чистова' 'conversation'
-        # so my replics will be added into 'bot_replics.txt'
-        # from your conversation
         try:
             with codecs.open(os.path.join(BASE, filename), 'r', encoding='UTF-8') as file:
                 console_counter = 0
@@ -56,18 +51,18 @@ class Tchebot:
 
     def reply(self, message, used=[]):
         try:
-            #allbullshit = tchewik.readlines()
             random.shuffle(self.data)
             yourWords = re.split(r'[^a-zа-яё\-]', message.lower())
             while '' in yourWords:
                 yourWords.remove('')
 
-            for word in yourWords:
-                keyword = self._checkQuestion(word.lower())
-                for bullshit in self.data:
-                    bullshit = ' '.join(bullshit)  # костыль, временный.
-                    if not bullshit in used and re.match(keyword, bullshit, re.IGNORECASE):
-                        return bullshit
+            #for word in yourWords:
+            #    keyword = self._checkQuestion(word.lower())
+            keyword = self._checkQuestion(' '.join(yourWords))  # костыль, да
+            for bullshit in self.data:
+                bullshit = ' '.join(bullshit)  # костыль, временный.
+                if not bullshit in used and re.match(keyword, bullshit, re.IGNORECASE):
+                    return bullshit
             return ' '.join(self.data[random.randint(0, len(self.data))])
         except IOError:
             print(">>> TROUBLES WITH OPEN bot_replics.txt, SIR. TRY TO START tchebot.py FROM COMMAND LINE")
@@ -79,7 +74,6 @@ def help():
     sys.exit(0)
 
 if __name__ == "__main__":
-
     if len(sys.argv) > 1 and '--help' in sys.argv:
         help()
     else:

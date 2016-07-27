@@ -149,7 +149,7 @@ QUESTIONS = {
         r'^спасибо.*',
         r'^да ладно.*',
     ],
-    r'(.*прикинь.*)':[
+    r'(.*прикинь.*)': [
         r'.*ох.*еть',
     ],
     r'(.*пасибо.*)':[
@@ -177,12 +177,16 @@ QUESTIONS = {
     ],
     r'х.* ли .+': [
         r'ты же .+'
+    ],
+    r'.*зел.н.+слон.*': [
+        r'братишк'
     ]
 }
 
 if __name__ == "__main__":
     if '--help' in sys.argv:
         print("\nWith the script you can check if questions dictionary is ready to use.")
+        sys.exit(0)
     try:
         # load dictionary from .json
         dictionary = json.load(open(os.path.join(BASE, FILE_DICTIONARY), 'r'))
