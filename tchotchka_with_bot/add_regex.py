@@ -17,7 +17,7 @@ if __name__ == "__main__":
             json.dump(questions, file)
         print('\nDONE: remove {}'.format(sys.argv[-1]))
         sys.exit(0)
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 1 and not '--help' in sys.argv:
         with open(os.path.join(BASE, 'answers.json'), 'r') as file:
             questions = json.load(file)
         questions[sys.argv[1]] = []
