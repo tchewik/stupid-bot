@@ -107,6 +107,8 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET= keys.VK_APP['api_secret']
 SOCIAL_AUTH_FACEBOOK_KEY = keys.FACEBOOK_APP['app_id']
 SOCIAL_AUTH_FACEBOOK_SECRET = keys.FACEBOOK_APP['api_secret']
 
+SOCIAL_AUTH_LOGIN_URL = '/app/oauth2login'
+#LOGIN_REDIRECT_URL = 'conversation'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -141,4 +143,5 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
+    'tchotchka_with_bot.mysocial.save_profile',
 )
