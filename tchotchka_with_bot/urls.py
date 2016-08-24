@@ -5,6 +5,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'tchotchka_with_bot.views.home', name='home'),
     url(r'^conversation$', 'tchotchka_with_bot.views.conversation', name='conversation'),
-    url(r'^app/', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^app/oauth2login$', 'tchotchka_with_bot.views.oauth2login_view'),  # наша вьюха после авторизации
+    url(r'^app/', include('social.apps.django_app.urls', namespace='social'))
 ]

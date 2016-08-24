@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .models import Bot
 from .forms import MsgForm
 from . import tchebot
-from django.http import HttpResponse
 
 
 def home(request):
@@ -29,7 +28,3 @@ def conversation(request):
         replics = Bot.objects.filter(guy_id=request.user)
         return render(request, 'tchotchka_with_bot/conversation.html', {'replics': replics, 'form': form})
     return render(request, 'tchotchka_with_bot/log_in.html')
-
-
-def oauth2login_view(request):
-    return HttpResponse('<html><body>please wait for authenticate...</body></html>')
