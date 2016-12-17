@@ -1,0 +1,11 @@
+HELP
+
+#      type key and all the items in a string to add it
+#      example:
+#             $ python3 add_regex.py 'Привет.*' 'Прощай.*' '.*потому что.*'
+#
+#      or type key to remove it:
+#             $ python3 add_regex.py remove 'Привет.*'
+#
+#      you can also output your dictionary in the console
+#             $ python3 add_regex.py show\n

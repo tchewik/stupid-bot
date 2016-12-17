@@ -9,11 +9,13 @@ import pickle, json
 BASE = os.path.dirname(os.path.abspath(__file__))
 FILE_TIP = 'res/tip.dat'
 FILE_HELP = 'res/help.dat'
+FILE_AVOID = 'res/avoid.dat'
 
 class Tchebot:
     data = []
     FILE_DATA = 'res/data.dat'
     FILE_ANSWERS = 'res/answers.json'
+    FILE_AVOID = 'res/avoid.dat'
 
     def __init__(self):
         try:
@@ -31,9 +33,17 @@ class Tchebot:
                 for sentence in re.findall(name + ' \(.*\):\n([^(http)/]+)\n\n', file.read()):
                     if len(sentence) > 5:
                         sentence = re.split(r'[^a-zа-яё\-]', sentence.lower())  # tokenize a sentence
-                        for trash in ['']:
+                        avoid_data = ['']
+                        try:
+                            with codecs.open(os.path.join(BASE, FILE_AVOID), 'r', encoding='UTF-8') as file_avoid:
+                                avoid_data = re.split(r'[^a-zа-яё\-]', file_avoid.read().lower())
+                        except IOError as annoyingshit:
+                            print(u'Can\'t open the {0} file'.format(annoyingshit.filename))
+
+                        for trash in avoid_data:
                             while trash in sentence:
                                 sentence.remove(trash)
+                                
                         self.data.append(sentence)
                         console_counter += 1
                         if console_counter % 500 == 0:
@@ -62,7 +72,7 @@ class Tchebot:
             yourWords = re.split(r'[^a-zа-яё\-]', message.lower())
             while '' in yourWords:
                 yourWords.remove('')
-                
+
             keyword = self._checkQuestion(' '.join(yourWords))  # костыль, да
             for bullshit in self.data:
                 bullshit = ' '.join(bullshit)  # костыль, временный.
