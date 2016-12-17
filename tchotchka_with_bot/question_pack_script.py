@@ -1,9 +1,12 @@
 import sys
+import codecs
 import json
 import os
-BASE = os.path.dirname(os.path.abspath(__file__))
-FILE_DICTIONARY = 'answers.json'
 
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+FILE_DICTIONARY = 'res/answers.json'
+FILE_TIP = 'res/tip.dat'
 QUESTIONS = {
     r'^почему.*':[
         r'потому что',
@@ -183,10 +186,18 @@ QUESTIONS = {
     ]
 }
 
+
+def tip():
+    with codecs.open(os.path.join(BASE, FILE_TIP), 'r', encoding='UTF-8') as file_tip:
+        print(file_tip.read())
+
+
 if __name__ == "__main__":
     if '--help' in sys.argv:
         print("\nWith the script you can check if questions dictionary is ready to use.")
         sys.exit(0)
+
+    tip()
     try:
         # load dictionary from .json
         dictionary = json.load(open(os.path.join(BASE, FILE_DICTIONARY), 'r'))

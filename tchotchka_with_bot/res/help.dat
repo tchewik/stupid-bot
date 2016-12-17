@@ -4,9 +4,12 @@ HELP
 #   use it only for file splitting, if you have one
 #   add your .txt file in the folder and do smth
 #   for example
-#       $ python3 tchebot.py grab 'Елена Чистова' 'conversation'
+#       $ python3 tchebot.py grab "Елена Чистова" "conversation
 #   so my replics will be added into 'data' file
 #   from your conversation
+#
+#   if you grabbed all your data but bot says he sees nothing,
+#   try "question_pack_script.py"
 #
 #   option: talk
 #   use it to talk with bot in command line

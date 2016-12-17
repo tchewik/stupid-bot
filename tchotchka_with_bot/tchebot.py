@@ -1,26 +1,28 @@
 # -*- coding: utf-8 -*-
 import codecs, re
 import os.path, sys
-BASE = os.path.dirname(os.path.abspath(__file__))
 import random
 import pickle, json
 #import base_of_shit
 
 
+BASE = os.path.dirname(os.path.abspath(__file__))
+FILE_TIP = 'res/tip.dat'
+FILE_HELP = 'res/help.dat'
+
 class Tchebot:
     data = []
-    file_data = 'data'
+    FILE_DATA = 'res/data.dat'
+    FILE_ANSWERS = 'res/answers.json'
 
     def __init__(self):
         try:
-            with open(os.path.join(BASE, self.file_data), 'rb+') as file_data:
+            with open(os.path.join(BASE, self.FILE_DATA), 'rb+') as file_data:
                 self.data = pickle.load(file_data)
-            with open(os.path.join(BASE, 'answers.json'), 'r+') as file_dict:
+            with open(os.path.join(BASE, self.FILE_ANSWERS), 'r+') as file_dict:
                 self._questions = json.load(file_dict)
         except IOError:
             print("can't find data, please, use 'grab' option or type '--help'")
-            sys.exit(0)
-            
 
     def grab(self, name, filename):
         try:
@@ -37,7 +39,7 @@ class Tchebot:
                         if console_counter % 500 == 0:
                             print(">>> successfully added string {0} in dataset".format(console_counter))
 
-                with open(os.path.join(BASE, self.file_data), 'wb+') as file:  # write in a binary file
+                with open(os.path.join(BASE, self.FILE_DATA), 'wb+') as file:  # write in a binary file
                     pickle.dump(self.data, file)
                 print("\nfile {} was successfully grabbed!\n".format(sys.argv[3]))
 
@@ -46,10 +48,13 @@ class Tchebot:
             sys.exit(0)
 
     def _checkQuestion(self, keyword):
-        for key in self._questions.keys():
-            if re.match(key, keyword, re.IGNORECASE):
-                return self._questions[key][random.randint(0, len(self._questions[key]) - 1)]
-        return keyword
+        try:
+            for key in self._questions.keys():
+                    if re.match(key, keyword, re.IGNORECASE):
+                        return self._questions[key][random.randint(0, len(self._questions[key]) - 1)]
+            return keyword
+        except AttributeError:
+                sys.exit(0)
 
     def reply(self, message, used=[]):
         try:
@@ -57,9 +62,7 @@ class Tchebot:
             yourWords = re.split(r'[^a-zа-яё\-]', message.lower())
             while '' in yourWords:
                 yourWords.remove('')
-
-            #for word in yourWords:
-            #    keyword = self._checkQuestion(word.lower())
+                
             keyword = self._checkQuestion(' '.join(yourWords))  # костыль, да
             for bullshit in self.data:
                 bullshit = ' '.join(bullshit)  # костыль, временный.
@@ -70,9 +73,14 @@ class Tchebot:
             print(">>> TROUBLES WITH OPEN bot_replics.txt, SIR. TRY TO START tchebot.py FROM COMMAND LINE")
             return 'Чего-то пошло не так. Попробуй вживую.'
 
+
+def tip():
+    with codecs.open(os.path.join(BASE, FILE_TIP), 'r', encoding='UTF-8') as file_tip:
+        print(file_tip.read())
+
 def help():
-    with codecs.open(os.path.join(BASE, 'help'), 'r', encoding='UTF-8') as help_file:
-        print(help_file.read())
+    with codecs.open(os.path.join(BASE, FILE_HELP), 'r', encoding='UTF-8') as file_help:
+        print(file_help.read())
     sys.exit(0)
 
 def reply(sentence, escape_list):
@@ -83,7 +91,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and '--help' in sys.argv:
         help()
     else:
-        print("\nuse --help for information\n")
+        tip()
         tchebot = Tchebot()
 
         if len(sys.argv) == 4 and str(sys.argv[1]) == 'grab':
