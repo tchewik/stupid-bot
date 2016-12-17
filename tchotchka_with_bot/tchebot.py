@@ -19,7 +19,8 @@ class Tchebot:
                 self._questions = json.load(file_dict)
         except IOError:
             print("can't find data, please, use 'grab' option or type '--help'")
-
+            sys.exit(0)
+            
 
     def grab(self, name, filename):
         try:
