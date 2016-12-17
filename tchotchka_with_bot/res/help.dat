@@ -4,7 +4,7 @@ HELP
 #   use it only for file splitting, if you have one
 #   add your .txt file in the folder and do smth
 #   for example
-#       $ python3 tchebot.py grab "Елена Чистова" "conversation
+#       $ python3 tchebot.py grab "Елена Чистова" "conversation.txt"
 #   so my replics will be added into 'data' file
 #   from your conversation
 #
