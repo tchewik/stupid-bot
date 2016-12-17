@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 import codecs, re
 import os.path, sys
 BASE = os.path.dirname(os.path.abspath(__file__))
