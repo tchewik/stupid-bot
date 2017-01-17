@@ -24,7 +24,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tchotchka_with_bot'
+    'tchotchka_with_bot',
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -88,3 +89,51 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+# for social authentication
+# social_auth application configure
+SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (
+    'social.backends.vk.VKOAuth2',
+    'social.backends.facebook.FacebookAppOAuth2',
+)
+
+# OAuth keys for each social network
+from . import keys
+
+
+# Модель пользователя. Здесь стандартная.
+SOCIAL_AUTH_USER_MODEL = 'auth.User'
+
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Проверка url перенаправления
+SOCIAL_AUTH_SANITIZE_REDIRECTS = True
+
+# FACEBOOK
+# Только для facebook, указываем запрашиваемые поля
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'ru_RU',
+  'fields': 'id, name, email',
+}
+# Разрешение на получение поля email
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+# Ключи
+SOCIAL_AUTH_FACEBOOK_KEY = keys.FACEBOOK_APP['app_id']
+SOCIAL_AUTH_FACEBOOK_SECRET = keys.FACEBOOK_APP['api_secret']
+
+# ---> . 28
+# ---> urls.py 8
+
+
+# VKONTAKTE
+
+# Ключи
+SOCIAL_AUTH_VK_OAUTH2_KEY = keys.VK_APP['app_id']
+SOCIAL_AUTH_VK_OAUTH2_SECRET = keys.VK_APP['api_secret']
