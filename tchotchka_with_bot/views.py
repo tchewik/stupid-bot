@@ -2,17 +2,28 @@ from django.shortcuts import render
 from .models import Bot
 from .forms import MsgForm
 from . import tchebot
+from django.contrib import auth
 
 
 def home(request):
-    #  cleans db every time you open homepage
     if request.user.is_authenticated():
-        Bot.objects.filter(guy_id=request.user).delete()
+        userinfo = {'name': request.user.username,
+                    'firstname': request.user.first_name,
+                    'lastname': request.user.last_name,
+                    'joined': request.user.date_joined
+                    }
+
+        return render(request, 'tchotchka_with_bot/home.html', {'userinfo': userinfo})
     return render(request, 'tchotchka_with_bot/home.html')
 
 
 def conversation(request):
     if request.user.is_authenticated():
+        userinfo = {'name': request.user.username,
+                    'firstname': request.user.first_name,
+                    'lastname': request.user.last_name,
+                    'joined': request.user.date_joined
+                    }
         if request.method == "POST":
             form = MsgForm(request.POST)
             if form.is_valid():
@@ -26,5 +37,23 @@ def conversation(request):
 
         form = MsgForm()
         replics = Bot.objects.filter(guy_id=request.user)
-        return render(request, 'tchotchka_with_bot/conversation.html', {'replics': replics, 'form': form})
+        return render(request, 'tchotchka_with_bot/conversation.html', {'userinfo': userinfo, 'replics': replics, 'form': form})
     return render(request, 'tchotchka_with_bot/log_in.html')
+
+
+def profile(request):
+    if request.user.is_authenticated():
+        userinfo = {'name': request.user.username,
+                    'firstname': request.user.first_name,
+                    'lastname': request.user.last_name,
+                    'joined': request.user.date_joined
+                    }
+        return render(request, 'tchotchka_with_bot/profile.html', {'userinfo': userinfo})
+
+
+def logout(request):
+    #  cleans db every time you log out
+    Bot.objects.filter(guy_id=request.user).delete()
+    auth.logout(request)
+    return home(request)
+

@@ -1,0 +1,38 @@
+{% extends 'tchotchka_with_bot/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div id="modal1" class="modal">
+        <div class="container">
+            <div class="row"></div>
+            <div class="row user-info">
+                <div class="col m2 s3">
+                    <div class="avatar" style='background-image: url("{%  static 'img/your_avatar.jpg' %}")'></div>
+                </div>
+                <div class="col m10 s9 text">
+                    <div class="row"><div class="col m3 s12"><strong>Фамилия: </strong></div>
+                        <div class="col m9 s12">{{ userinfo.lastname }}</div>
+                    </div>
+                    <div class="row"><div class="col m3 s12"><strong>Имя: </strong></div>
+                        <div class="col m9 s12">{{ userinfo.firstname }}</div>
+                    </div>
+                    <div class="row"><div class="col m3 s12"><strong>Прозвище: </strong></div>
+                        <div class="col m9 s12">{{ userinfo.name }}</div>
+                    </div>
+                    <div class="row"><div class="col m3 s12"><strong>В рядах: </strong></div>
+                        <div class="col m9 s12">c {{ userinfo.joined }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="{% url 'home' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">На главную</a>
+            <a href="{% url 'logout' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Покинуть заведение</a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('#modal1').openModal();
+    </script>
+
+{% endblock %}

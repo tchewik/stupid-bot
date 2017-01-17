@@ -80,3 +80,13 @@ a:active {
     background-color: #fff;
     }
 }
+
+
+.user-info {
+    padding-top: 1em;
+
+}
+
+.user-info .avatar {
+    background: 80% 80% no-repeat;
+}
